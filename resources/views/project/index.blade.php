@@ -4,6 +4,10 @@
     
 @section("content")
 
+<div class="d-flex py-4 gap-3">
+ <a  class="btn btn-outline-primary" href="{{route("project.create")}}">Aggiungi un progetto</a> 
+</div>
+
 
 <div class="container">      
        
