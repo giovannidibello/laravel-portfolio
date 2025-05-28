@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\New_;
 
@@ -24,7 +25,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view("project.create");
+        $types = Type::all();
+
+        return view("project.create", compact("types"));
     }
 
     /**
@@ -37,6 +40,7 @@ class ProjectController extends Controller
         $newProject = new Project();
 
         $newProject->name = $data["name"];
+        $newProject->type_id = $data["type_id"];
         $newProject->period = $data["period"];
         $newProject->customer = $data["customer"];
         $newProject->summary = $data["summary"];
@@ -51,7 +55,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-
+        // dd($project->type);
         return view("project.show", compact("project"));
     }
 
@@ -60,8 +64,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        // dd($project);
-        return view("project.edit", compact("project"));
+        $types = Type::all();
+        return view("project.edit", compact("project", "types"));
     }
 
     /**
@@ -73,6 +77,7 @@ class ProjectController extends Controller
 
         // modifico le informazioni del progetto
         $project->name = $data["name"];
+        $project->type_id = $data["type_id"];
         $project->period = $data["period"];
         $project->customer = $data["customer"];
         $project->summary = $data["summary"];
