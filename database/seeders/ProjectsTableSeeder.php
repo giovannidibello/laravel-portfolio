@@ -19,10 +19,11 @@ class ProjectsTableSeeder extends Seeder
 
             $newProject = new Project();
 
-            $newProject->name = $faker->name();
+            $newProject->name = $faker->words(2, true);
             $newProject->customer = $faker->name();
             $newProject->period = $faker->monthName();
             $newProject->summary = $faker->paragraph();
+            $newProject->type_id = rand(1, 4);
 
 
             $newProject->save();

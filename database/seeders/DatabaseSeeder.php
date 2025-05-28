@@ -13,7 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // utilizzo il seeder per la tabella Projects
-        $this->call([ProjectsTableSeeder::class]);
+        // utilizzo i seeder per la tabella Types e Projects 
+        $this->call([
+            TypesTableSeeder::class,
+            ProjectsTableSeeder::class
+        ]);
     }
 }
