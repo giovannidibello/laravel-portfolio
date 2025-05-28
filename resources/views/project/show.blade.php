@@ -17,6 +17,8 @@
 
 <h2>{{$project->customer}}</h2>
 
+<h2>{{$project->type->name}}</h2>
+
 <p>{{$project->summary}}</p>
     
 </div>

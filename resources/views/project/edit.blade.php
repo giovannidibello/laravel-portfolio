@@ -15,6 +15,14 @@
     <input type="text" name="name" id="name" value="{{ $project->name }}">   
 </div>
 <div class="form-control mb-3 d-flex flex-column">
+    <label for="type_id">Tipo</label>
+    <select name="type_id" id="type_id">
+    @foreach ($types as $type)
+        <option value="{{$type->id}}" {{{$project->type_id == $type->id ? "selected" : "" }}}>{{$type->name}}</option>
+    @endforeach
+    </select>
+</div>
+<div class="form-control mb-3 d-flex flex-column">
     <label for="period">Periodo</label>
     <input type="text" name="period" id="period" value="{{ $project->period }}">    
 </div>
