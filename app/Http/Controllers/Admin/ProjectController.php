@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\New_;
@@ -25,9 +26,13 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        // prendo i type
         $types = Type::all();
 
-        return view("project.create", compact("types"));
+        // prendo le technology
+        $technologies = Technology::all();
+
+        return view("project.create", compact("types", "technologies"));
     }
 
     /**
@@ -36,6 +41,8 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+
+        // dd($data);
 
         $newProject = new Project();
 
@@ -47,6 +54,15 @@ class ProjectController extends Controller
 
         $newProject->save();
 
+        // dopo aver salvato il progetto
+
+        // verifico se sto ricevendo le technologies
+        if ($request->has("technologies")) {
+
+            // sincronizzo le technologies della tabella pivot
+            $newProject->technologies()->sync($data["technologies"]);
+        }
+
         return redirect()->route("project.show", $newProject);
     }
 
@@ -55,7 +71,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        // dd($project->type);
+        // dd($project->technologies);
         return view("project.show", compact("project"));
     }
 
@@ -64,8 +80,13 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        // prendo il type
         $types = Type::all();
-        return view("project.edit", compact("project", "types"));
+
+        // prendo le technology
+        $technologies = Technology::all();
+
+        return view("project.edit", compact("project", "types", "technologies"));
     }
 
     /**
@@ -83,6 +104,16 @@ class ProjectController extends Controller
         $project->summary = $data["summary"];
 
         $project->update();
+
+        // verifico se sto ricevendo le technologies
+        if ($request->has("technologies")) {
+
+            // sincronizzo le technologies della tabella pivot
+            $project->technologies()->sync($data["technologies"]);
+        } else {
+            // se non ricevo delle technologies, allora elimino tutte quelle collegate a questo progetto
+            $project->technologies()->detach();
+        }
 
         return redirect()->route("project.show", $project);
     }
