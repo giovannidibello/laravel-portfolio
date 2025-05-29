@@ -19,6 +19,16 @@
     @endforeach
     </select>
 </div>
+
+{{-- technologies --}}
+<div class="form-control mb-3 d-flex flex-wrap">
+    @foreach ($technologies as $technology)
+    <div class="me-2">
+    <input type="checkbox" name="technologies[]" value="{{$technology->id}}" id="tag-{{$technology->id}}">
+    <label for="tag-{{$technology->id}}">{{$technology->name}}</label>
+    </div>   
+    @endforeach
+</div>
 <div class="form-control mb-3 d-flex flex-column">
     <label for="period">Periodo</label>
     <input type="text" name="period" id="period">    

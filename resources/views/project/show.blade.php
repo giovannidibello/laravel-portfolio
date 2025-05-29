@@ -19,6 +19,14 @@
 
 <h2>{{$project->type->name}}</h2>
 
+@if (count($project->technologies) > 0)
+    <h5>
+      @foreach ($project->technologies as $tech)
+      <span class="badge" style="background-color: {{$tech->color}}">{{$tech->name}}</span>          
+      @endforeach
+    </h5>
+@endif
+
 <p>{{$project->summary}}</p>
     
 </div>
