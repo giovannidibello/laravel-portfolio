@@ -13,10 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // utilizzo i seeder per la tabella Types e Projects 
+        // utilizzo i seeder per la tabella Types ,Projects  e Technologies
         $this->call([
             TypesTableSeeder::class,
-            ProjectsTableSeeder::class
+            ProjectsTableSeeder::class,
+            TechnologiesTableSeeder::class
         ]);
     }
 }
