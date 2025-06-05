@@ -13,6 +13,10 @@
 
 <div class="container">
 
+@if ($project->image)
+   <img src="{{ asset ("storage/" . $project->image)}}" alt="cover" class="img-fluid" style="max-width: 400px; height: auto;">   
+@endif
+
 <h1>{{$project->period}}</h1>
 
 <h2>{{$project->customer}}</h2>

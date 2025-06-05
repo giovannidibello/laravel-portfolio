@@ -4,7 +4,7 @@
 
 @section('content')
 
-<form action="{{route("project.store")}}" method="POST">
+<form action="{{route("project.store")}}" method="POST" enctype="multipart/form-data">
 @csrf
 
 <div class="form-control mb-3 d-flex flex-column">
@@ -36,6 +36,10 @@
 <div class="form-control mb-3 d-flex flex-column">
     <label for="customer">Cliente</label>
     <input type="text" name="customer" id="customer">    
+</div>
+<div class="form-control mb-3 d-flex flex-wrap gap-3">
+    <label for="image">Immagine</label>
+    <input type="file" name="image" id="image">    
 </div>
 <div class="form-control mb-3 d-flex flex-column">
     <label for="summary">Descrizione</label>

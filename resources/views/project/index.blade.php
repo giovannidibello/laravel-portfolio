@@ -17,7 +17,11 @@
         <div class="col">
             <x-card>
 
-                <x-slot:name>{{$project ["name"]}}</x-slot>          
+                <x-slot:image>{{$project ["image"]}}</x-slot>                         
+
+                <x-slot:name>{{$project ["name"]}}</x-slot>    
+                
+                <x-slot:type>{{$project->type ["name"]}}</x-slot>
                                 
                 <x-slot:period>{{$project ["period"]}}</x-slot>
 
