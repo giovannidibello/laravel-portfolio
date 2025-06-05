@@ -15,13 +15,18 @@ class ProjectsTableSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
+        $techWords = ['AI', 'Cloud', 'Smart', 'Data', 'App', 'Engine', 'Tech', 'System', 'Network', 'Cyber', 'Platform', 'Web'];
+
         for ($i = 0; $i < 5; $i++) {
+
+            $word1 = $faker->randomElement($techWords);
+            $word2 = ucfirst($faker->words(1, true));
 
             $newProject = new Project();
 
-            $newProject->name = $faker->words(2, true);
+            $newProject->name = "$word1 $word2";
             $newProject->customer = $faker->name();
-            $newProject->period = $faker->monthName();
+            $newProject->period = $faker->monthName . ' ' . $faker->numberBetween(2023, 2025);
             $newProject->summary = $faker->paragraph();
             $newProject->type_id = rand(1, 4);
 
