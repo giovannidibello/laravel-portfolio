@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\New_;
 
 class ProjectController extends Controller
@@ -51,6 +52,14 @@ class ProjectController extends Controller
         $newProject->period = $data["period"];
         $newProject->customer = $data["customer"];
         $newProject->summary = $data["summary"];
+
+        // controllo se l'utente ha richiesto l'upload dell'immagine
+        if (array_key_exists("image", $data)) {
+            // carico l'immagine nel nostro storage
+            $img_url = Storage::putFile("projects", $data["image"]);
+
+            $newProject->image = $img_url;
+        }
 
         $newProject->save();
 
@@ -103,6 +112,18 @@ class ProjectController extends Controller
         $project->customer = $data["customer"];
         $project->summary = $data["summary"];
 
+        if (array_key_exists("image", $data)) {
+
+            // elimino immagine precedente
+            Storage::delete($project->image);
+
+            // carico la nuova
+            $img_url = Storage::putFile("projects", $data["image"]);
+
+            // aggiorno il db
+            $project->image = $img_url;
+        }
+
         $project->update();
 
         // verifico se sto ricevendo le technologies
@@ -123,6 +144,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        // se il progetto ha l'immagine collegata la elimino
+        if ($project->image) {
+            Storage::delete($project->image);
+        }
+
         $project->technologies()->detach();
         $project->delete();
 
